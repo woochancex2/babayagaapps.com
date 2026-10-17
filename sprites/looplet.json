@@ -1,0 +1,48 @@
+{
+  "anchor" : {
+    "x" : 16,
+    "y" : 28
+  },
+  "blinkEvery" : 5.2000000000000002,
+  "blinkFor" : 0.14999999999999999,
+  "cell" : 32,
+  "directions" : [
+    "south",
+    "southEast",
+    "east",
+    "northEast",
+    "north",
+    "northWest",
+    "west",
+    "southWest"
+  ],
+  "emotes" : [
+    "bang",
+    "q",
+    "heart",
+    "note",
+    "zz",
+    "dots",
+    "star",
+    "coin"
+  ],
+  "emoteSize" : 22,
+  "expressions" : [
+    "happy",
+    "surprised",
+    "love",
+    "sleepy",
+    "curious",
+    "sad"
+  ],
+  "hop" : 10,
+  "poses" : [
+    "idle",
+    "walkA",
+    "walkB",
+    "blink",
+    "rest"
+  ],
+  "source" : "PixelNativeArt.swift (app main), skin mint, eye.capsule",
+  "walkFps" : 6
+}

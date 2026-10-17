@@ -1,0 +1,21 @@
+{
+ "name": "PASS LOOP",
+ "short_name": "PASS LOOP",
+ "description": "Flashcards for iPhone with a companion who walks when you study.",
+ "start_url": "/",
+ "display": "browser",
+ "background_color": "#282036",
+ "theme_color": "#8EECBF",
+ "icons": [
+  {
+   "src": "/icons/app-icon-180.png",
+   "sizes": "180x180",
+   "type": "image/png"
+  },
+  {
+   "src": "/icons/app-icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  }
+ ]
+}
