@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#fbf3e4">
+  <title>룹룹 쌓기</title>
+  <!-- 링크 미리보기(11-02, 그림 public/og.png = 실제 게임 화면). 공개 주소 babayagaapps.com/stack/ -->
+  <meta name="description" content="탭 한 번으로 룹룹을 쌓아요. 오늘의 탑, 너는 몇 마리?">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="룹룹 쌓기">
+  <meta property="og:description" content="탭 한 번으로 룹룹을 쌓아요. 오늘의 탑, 너는 몇 마리?">
+  <meta property="og:url" content="https://babayagaapps.com/stack/">
+  <meta property="og:image" content="https://babayagaapps.com/stack/og.png">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="/stack/fonts/Galmuri11-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <style>#splash{z-index:100;background:#fbf3e4;place-items:center;transition:opacity .22s ease-in-out;display:grid;position:fixed;inset:0}#splash.out{opacity:0;pointer-events:none}@media (prefers-reduced-motion:no-preference){#splash svg{animation:1s .16s infinite splash-hop}}@keyframes splash-hop{0%{animation-timing-function:ease-out;transform:none}14%{animation-timing-function:ease-in;transform:translateY(-14px)}30%{transform:translateY(2px)}38%,to{transform:none}}</style>
+  <script type="module" crossorigin src="/stack/assets/index-W2Y8xUzG.js"></script>
+  <link rel="modulepreload" crossorigin href="/stack/assets/palette-DFTvO8Dj.js">
+  <link rel="stylesheet" crossorigin href="/stack/assets/index-DdOZEKdk.css">
+</head>
+<body>
+  <!-- 처음 불러올 때(11-03 사용자: "앱 스플래시처럼"): 게임 배경색(--bg) 화면 + 가운데 룹룹(shape.js 도트)이 통통.
+       불러오기가 끝나면 사라짐. 검은 화면은 사파리 위아래 줄까지 검게 물들어 밝은 배경으로(11-03 사용자). 동작 줄이기면 튀지 않고 사라지기만 -->
+  <div id="splash" aria-hidden="true"><svg viewBox="0 0 16 16" width="120" height="120" shape-rendering="crispEdges"><path fill="#2c2432" d="M7 1h4v1h-4zM5 2h2v1h-2zM11 2h2v1h-2zM3 3h2v1h-2zM13 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM1 5h1v1h-1zM14 5h1v1h-1zM1 6h1v1h-1zM5 6h1v1h-1zM10 6h1v1h-1zM15 6h1v1h-1zM0 7h1v1h-1zM4 7h2v1h-2zM9 7h2v1h-2zM15 7h1v1h-1zM0 8h1v1h-1zM4 8h2v1h-2zM9 8h2v1h-2zM15 8h1v1h-1zM0 9h1v1h-1zM15 9h1v1h-1zM0 10h1v1h-1zM6 10h1v1h-1zM9 10h1v1h-1zM15 10h1v1h-1zM0 11h1v1h-1zM7 11h2v1h-2zM15 11h1v1h-1zM1 12h1v1h-1zM14 12h1v1h-1zM1 13h1v1h-1zM6 13h4v1h-4zM14 13h1v1h-1zM2 14h4v1h-4zM10 14h4v1h-4z"/><path fill="#8ceabd" d="M7 2h4v1h-4zM7 3h6v1h-6zM3 4h1v1h-1zM5 4h9v1h-9zM2 5h12v1h-12z"/><path fill="#cbf6e1" d="M5 3h2v1h-2zM4 4h1v1h-1z"/><path fill="#77dfae" d="M2 6h2v1h-2zM6 6h3v1h-3zM11 6h3v1h-3zM1 7h3v1h-3zM6 7h3v1h-3zM11 7h3v1h-3zM1 8h3v1h-3zM6 8h3v1h-3zM11 8h3v1h-3zM1 9h1v1h-1zM4 9h8v1h-8zM1 10h5v1h-5zM7 10h2v1h-2zM10 10h4v1h-4z"/><path fill="#ffffff" d="M4 6h1v1h-1zM9 6h1v1h-1z"/><path fill="#54b998" d="M14 6h1v1h-1zM14 7h1v1h-1zM14 8h1v1h-1zM14 9h1v1h-1zM14 10h1v1h-1zM1 11h6v1h-6zM9 11h5v1h-5zM2 12h11v1h-11z"/><path fill="#f4909f" d="M2 9h2v1h-2zM12 9h2v1h-2z"/><path fill="#41a582" d="M14 11h1v1h-1zM13 12h1v1h-1zM2 13h4v1h-4zM10 13h4v1h-4z"/></svg></div>
+  <script>
+    (() => {
+      const s = document.getElementById("splash"), t0 = performance.now();
+      let gone = false;
+      const done = () => {
+        if (gone) return; gone = true;
+        setTimeout(() => { s.classList.add("out"); setTimeout(() => s.remove(), 240); }, Math.max(0, 640 - (performance.now() - t0)));   // 한 번은 튀는 걸 보이게
+      };
+      addEventListener("load", done, { once: true });
+      setTimeout(done, 8000);                                          // 그림 하나가 늦어도 8초면 걷음
+    })();
+  </script>
+  <canvas id="game" aria-label="룹룹 쌓기 게임 화면"></canvas>
+  <!-- FIRE 모드 물들임: 게임 화면 바로 위, 글자 · 게이지 아래 -->
+  <div class="fire-fx" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <!-- PERFECT(11-02): 누른 순간 가장자리 금빛 · 닿은 자리 충격파 -->
+  <div id="flash" class="flash" aria-hidden="true"></div>
+  <div id="wave" class="wave" aria-hidden="true"></div>
+  <!-- 타격감: 룹룹이 닿은 자리에 납작 고리 · 도트 조각 -->
+  <div id="hit" class="hit" aria-hidden="true"><b></b><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <header class="hud">
+    <div class="title">룹룹 쌓기<span id="best"></span></div>
+    <div class="score"><b id="height">0.0 m</b><span id="count">0마리</span></div>
+  </header>
+  <div id="pop" class="pop" aria-hidden="true"></div>
+  <div id="tap" class="tap" aria-hidden="true"><span>TAP!</span></div>
+  <div id="banner" class="banner" role="status" aria-live="polite"><b id="banner-name"></b><span id="banner-sub"></span></div>
+  <section class="aim" aria-label="게이지">
+    <p class="aim-help">가운데 <b>PERFECT</b>에 맞춰 탭!</p>
+    <div id="gauge" class="gauge" role="button" aria-label="탭해서 떨어뜨리기">
+      <div class="zone good"></div><div class="zone perfect"></div>
+      <div id="ticks" class="ticks" aria-hidden="true"></div>
+      <span class="perfect-label" aria-hidden="true">PERFECT</span>
+      <div id="gauge-mark" class="mark"></div>
+    </div>
+    <div id="lean" class="lean" data-level="lo" aria-hidden="true"><span>기울기</span><i><b id="lean-dot"></b></i></div>
+    <p id="fire" class="fire-badge" aria-live="polite"></p>
+    <p id="buff" class="buff" aria-live="polite"></p>
+  </section>
+  <!-- 아이템(11-02): 든 룹룹 머리 위 이름표(PERFECT에 맞추면 받음) -->
+  <div id="item" class="pickup" role="img" hidden><i id="item-icon"></i><span id="item-name"></span><em id="item-hint">PERFECT로 받기</em></div>
+  <!-- 도전 링크로 들어오면 게임 내내 상대 기록(11-01 사용자) -->
+  <div id="rivalbox" class="rivalbox" hidden>
+    <p><b class="rb-vs">VS</b><span id="rb-rec"></span></p>
+    <p class="rb-row"><i class="rb-bar"><b id="rb-fill"></b></i><span id="rb-left"></span></p>
+  </div>
+  <!-- 유령 탑(11-03, src/ghost.js): 받은 링크의 친구 탑이 같은 시간으로 자람 -->
+  <div id="ghost" class="ghost" hidden aria-hidden="true"><canvas id="ghost-cv"></canvas><span id="ghost-label"></span></div>
+  <nav class="tools"><button id="sound" type="button" aria-pressed="true">소리 켬</button><button id="homebtn" type="button">처음으로</button></nav>
+  <div id="rival" class="rival" hidden aria-hidden="true"><span id="rival-label"></span></div>
+  <div id="mybest" class="rival mine" hidden aria-hidden="true"><span id="mybest-label"></span></div>
+  <!-- 결과: 도트 게임기(그림 public/console.png, 자리 src/console.json). 버튼 자리는 main.js가 그림 칸에 맞춰 놓음 -->
+  <section id="over" class="over" hidden aria-label="결과">
+    <div id="console" class="console">
+      <img class="console-art" src="/stack/console.png" alt="" aria-hidden="true" draggable="false">
+      <canvas id="screen" class="c-screen" role="img" aria-label="결과 화면"></canvas>
+      <div id="plaque" class="c-plaque"><span id="logo" class="c-logo">룹룹 쌓기</span><input id="name" class="c-name" maxlength="12" autocomplete="off" enterkeyhint="done" placeholder="이름 넣기" aria-label="이름(선택, 사진 · 링크에 보여요)"></div>
+      <button id="share" class="c-btn" data-at="b" type="button" aria-label="공유하기(링크)"></button>
+      <button id="again" class="c-btn" data-at="a" type="button" aria-label="다시 하기"></button>
+      <button id="copyimg" class="c-btn c-pill" data-at="select" type="button" aria-label="사진 복사"></button>
+      <button id="copy" class="c-btn c-pill" data-at="start" type="button" aria-label="도전 링크 복사"></button>
+      <span class="c-lab" data-at="b" aria-hidden="true">공유</span>
+      <span class="c-lab" data-at="a" aria-hidden="true">다시</span>
+      <span class="c-lab" data-at="select" aria-hidden="true">사진 복사</span>
+      <span class="c-lab" data-at="start" aria-hidden="true">링크 복사</span>
+    </div>
+    <p id="toast" class="toast" role="status" aria-live="polite"></p>
+    <!-- 그려서 쌓기(11-03): 모드마다 글자가 바뀜(main.js paintLinks) -->
+    <p class="over-links"><button id="o-draw" type="button">내 룹룹 그려서 쌓기</button><button id="o-home" type="button" hidden>처음으로</button></p>
+    <!-- 11-02 사용자: 사이트에 올리며 인스타만 넣기(홍보) -->
+    <a class="insta" href="https://www.instagram.com/pass_loop/" target="_blank" rel="noopener">룹룹 이야기 더 보기 · 인스타 @pass_loop</a>
+  </section>
+  <!-- 처음 화면(11-03): 결과와 같은 도트 게임기. 화면에 두 모드 예시 그림(src/title.js) — 화면 반쪽을 누르거나, 노랑 = 오늘의 탑 · 빨강 = 그려서 쌓기,
+       십자 버튼으로 고르고 START. 자리는 main.js가 그림 칸(console.json)에 맞춰 놓음. 도전 링크로 들어오면 안 나옴 -->
+  <section id="start" class="start" hidden aria-label="모드 고르기">
+    <h1 class="start-title">룹룹 쌓기</h1>
+    <div class="console start-console">
+      <img class="console-art" src="/stack/console.png" alt="" aria-hidden="true" draggable="false">
+      <canvas id="start-screen" class="c-screen" aria-hidden="true"></canvas>
+      <button id="start-daily" class="c-zone" data-at="zoneL" type="button" aria-label="오늘의 탑 시작: 오늘은 누구나 같은 순서로 쌓아요"></button>
+      <button id="start-draw" class="c-zone" data-at="zoneR" type="button" aria-label="그려서 쌓기 시작: 내가 그린 룹룹으로 친구와 대결"></button>
+      <div class="c-plaque" data-at="plaque"><span class="c-logo">룹룹 쌓기</span><span id="start-best" class="c-best"></span></div>
+      <button class="c-btn" data-at="b" data-go="0" type="button" aria-label="오늘의 탑"></button>
+      <button class="c-btn" data-at="a" data-go="1" type="button" aria-label="그려서 쌓기"></button>
+      <button class="c-btn c-pad" data-at="dpadL" data-move="-1" type="button" aria-label="왼쪽 고르기"></button>
+      <button class="c-btn c-pad" data-at="dpadR" data-move="1" type="button" aria-label="오른쪽 고르기"></button>
+      <button id="start-sound" class="c-btn c-pill" data-at="select" type="button" aria-label="소리 켜고 끄기"></button>
+      <button id="start-go" class="c-btn c-pill" data-at="start" type="button" aria-label="고른 모드 시작"></button>
+      <span class="c-lab" data-at="b" aria-hidden="true">오늘의 탑</span>
+      <span class="c-lab" data-at="a" aria-hidden="true">그려서 쌓기</span>
+      <span id="start-sound-lab" class="c-lab" data-at="select" aria-hidden="true">소리 켬</span>
+      <span class="c-lab" data-at="start" aria-hidden="true">시작</span>
+    </div>
+    <!-- 11-03 사용자: 인스타에서 온 사람도 처음 화면에서 바로 보게 -->
+    <a class="insta" href="https://www.instagram.com/pass_loop/" target="_blank" rel="noopener">룹룹 이야기 더 보기 · 인스타 @pass_loop</a>
+  </section>
+  <!-- 내 룹룹 그리기(11-03, src/editor.js) -->
+  <section id="draw" class="draw" hidden aria-label="내 룹룹 그리기">
+    <div class="draw-card">
+      <header class="draw-head"><b>내 룹룹 그리기</b><button id="draw-close" type="button" aria-label="닫기">✕</button></header>
+      <div class="draw-pens" role="group" aria-label="칠하기 · 지우기"><button id="draw-pen" data-ic="pen" type="button" aria-pressed="true">칠하기</button><button id="draw-eraser" data-ic="eraser" type="button" aria-pressed="false">지우기</button></div>
+      <canvas id="draw-grid" class="draw-grid" role="img" aria-label="16×16 칸. 칠하기를 고르면 누른 칸을 칠하고, 지우기를 고르면 지워요"></canvas>
+      <p class="draw-name"><b id="draw-title"></b><span id="draw-stat"></span></p>
+      <p id="draw-rate" class="draw-rate" aria-live="polite"></p>
+      <p id="draw-line" class="draw-line" aria-live="polite"></p>
+      <div id="draw-colors" class="draw-colors" aria-label="색"></div>
+      <div class="draw-tools">
+        <button id="draw-undo" type="button">되돌리기</button><button id="draw-mirror" type="button" aria-pressed="false">대칭</button><button id="draw-dice" type="button">주사위</button><button id="draw-base" type="button">기본 모양</button><button id="draw-clear" type="button">비우기</button>
+      </div>
+      <button id="draw-go" class="draw-go" type="button">이 룹룹으로 쌓기</button>
+      <p id="draw-help" class="draw-help">친구는 링크를 열면 이 룹룹으로 바로 쌓아요 · 30마리 만점</p>
+    </div>
+  </section>
+  <!-- 방문 통계(11-03 사용자): 쿠키 없는 Cloudflare Web Analytics, 사이트 처리방침에 적음 -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "8d51e43b529341ddbe2fc96654c28c5f"}'></script>
+</body>
+</html>
